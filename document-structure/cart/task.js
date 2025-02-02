@@ -5,7 +5,7 @@ const productQuantityValues = document.querySelectorAll('.product__quantity-valu
 //Корзина
 const cartProducts = document.querySelector('.cart__products');
 const productImages = document.querySelectorAll('.product__image');
-//Клик на карточке 
+//Клик на карточке
 for(let i = 0; i < products.length; i += 1) {
   products[i].addEventListener('click', (event) => {
     event.preventDefault();
@@ -24,16 +24,9 @@ for(let i = 0; i < products.length; i += 1) {
     }
     //Клик на кнопке добавления товара в корзину
     if(event.target.classList.contains('product__add')) {
-      //Если в корзине нет товара
-      if(cartProducts.children.length === 0) {
+      //Если клик по карточке товара, которого нет в корзине
+      if(!cartProducts.querySelector(`[data-id="${products[i].getAttribute('data-id')}"]`)) {
           //data-id="${event.target.closest('.product').dataset.id}" && data-id="${products[i].getAttribute('data-id')}"
-          cartProducts.insertAdjacentHTML('beforeend',
-         `<div class="cart__product" data-id="${products[i].getAttribute('data-id')}">
-            <img class="cart__product-image" src="${productImages[i].getAttribute('src')}">
-            <div class="cart__product-count">${productQuantityValue}</div>
-          </div>`);
-          //Если клик по карточке товара, которого нет в корзине
-      } else if(!cartProducts.querySelector(`[data-id="${products[i].getAttribute('data-id')}"]`)) {
           cartProducts.insertAdjacentHTML('beforeend',
            `<div class="cart__product" data-id="${products[i].getAttribute('data-id')}">
               <img class="cart__product-image" src="${productImages[i].getAttribute('src')}">
@@ -42,9 +35,6 @@ for(let i = 0; i < products.length; i += 1) {
           //Если клик по карточке товара, который есть в корзине
       } else {
           let cartProductQuantity = +cartProducts.querySelector(`[data-id="${products[i].getAttribute('data-id')}"]`).querySelector('.cart__product-count').textContent;
-          console.log(cartProductQuantity);
-          console.log(typeof(cartProductQuantity));
-
           cartProductQuantity = cartProductQuantity + productQuantityValue;
           cartProducts.querySelector(`[data-id="${products[i].getAttribute('data-id')}"]`).querySelector('.cart__product-count').textContent = cartProductQuantity;
       }

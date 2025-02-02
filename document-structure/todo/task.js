@@ -4,21 +4,21 @@ const taskList = document.querySelector('.tasks__list');
 
 form.addEventListener('submit', (event) => {
   event.preventDefault();
-  if(input.value.length) {
+  if(input.value.trim().length) {
     taskList.insertAdjacentHTML('beforeEnd',
      `<div class="task">
         <div class="task__title">
-          ${input.value}
+          ${input.value.trim()}
         </div>
         <a href="#" class="task__remove">&times;</a>
       </div>`
     );
     form.reset();
   }
-  let tasksRemove = Array.from(document.querySelectorAll('.task__remove'));
-  tasksRemove.forEach((taskRemove) => {
-    taskRemove.addEventListener('click', () => {
-      taskRemove.parentElement.remove();
-    });
-  });
+});
+
+taskList.addEventListener('click', (event) => {
+  if(event.target.classList.contains('task__remove')) {
+    event.target.parentElement.remove();
+  }
 });
